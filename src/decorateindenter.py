@@ -13,7 +13,7 @@ def charCount(string, char):
 
     return ret
 
-class DECORATEIndenter(object):
+class DecorateIndenter(object):
     """It indents DECORATE and ACS! Sweet jesus."""
 
     def __init__(self, indentWidth=4, colonUnindent=2):
@@ -25,8 +25,8 @@ class DECORATEIndenter(object):
                                ", ".join([self.indentWidth, self.colonUnindent])
                               )
     
-    def processFile(self, fileName):
-        return self.processText(open(fileName).read())
+    def processFile(self, file):
+        return self.processText(file.read())
 
     def processText(self, text):
         indentLevel = 0
