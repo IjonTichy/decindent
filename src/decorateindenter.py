@@ -1,5 +1,11 @@
-indentChar = " "
+#!/usr/bin/python3
 
+import re
+
+CASERE  = re.compile("^case (\d+|\".+?\"|'.'):$")
+STATERE = re.compile("^[a-zA-Z0-9_]+:$")
+
+indentChar = " "
 
 def charCount(string, char):
     if len(char) != 1:
@@ -64,5 +70,12 @@ class DecorateIndenter(object):
         if noCommentLine.endswith(":"):
             whitespaceCut = min(indentLevel * self.indentWidth, self.colonUnindent)
             retLine = retLine[whitespaceCut:]
+
+            prevLineStrip = self.previousLine.strip()
+            if (prevLineStrip not in {"", "{"}) and not (CASERE.match(prevLineStrip)
+                                             or STATERE.match(prevLineStrip)):
+                retLine = "\n" + retLine
+
+        self.previousLine = noCommentLine
 
         return retLine, indentLevel, nextIndentLevel
