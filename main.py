@@ -42,7 +42,8 @@ def main(args):
             return 1
 
     indenter = decorateindenter.DecorateIndenter(indentWidth=args.space,
-                                                 colonUnindent=args.colon)
+                                                 colonUnindent=args.colon,
+                                                 changeLines=args.blank)
 
     indented = indenter.processText(toIndent)
 
@@ -62,9 +63,10 @@ if __name__ == "__main__":
     argp = argparse.ArgumentParser("decindent")
 
     argp.add_argument("file", default=sys.stdin,  nargs="?", help="the file to indent (defaults to stdin)")
-    argp.add_argument("-s", "--space",  default=4, help="the amount of spaces to indent to")
+    argp.add_argument("-b", "--blank",  action="store_false", default=1, help="don't add or remove blank lines")
     argp.add_argument("-c", "--colon",  default=2, help="how far to unindent on a colon")
     argp.add_argument("-d", "--dryrun", action="store_true", default=0, help="don't change anything")
+    argp.add_argument("-s", "--space",  default=4, help="the amount of spaces to indent to")
 
     args = argp.parse_args()
     
